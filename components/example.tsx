@@ -13,7 +13,7 @@ const Example: React.FC<Props> = function({
 }) {
   return (
     <div className= {styles.contactCard}>
-     Example
+     Example Working
     </div>
   )
 }
