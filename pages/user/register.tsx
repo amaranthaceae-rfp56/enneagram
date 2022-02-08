@@ -39,7 +39,7 @@ const Register = () => {
 
     router.push({
       pathname: '/test',
-      query: { user: currentUser.data.first_name }
+      query: { uid: currentUser.data.id }
     })
   };
 
