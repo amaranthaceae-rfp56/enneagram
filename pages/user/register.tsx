@@ -1,40 +1,129 @@
-import React, { useState } from 'react'
+import React, { ReactDOM, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Button from '@mui/material/Button'
 import axios from 'axios'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 type RegisterProps = {
 };
 
 const Register = () => {
 
-  let registerUser = async (e) => {
-    e.preventDefault()
-    console.log('First Name: ', e.target.firstName.value)
-    console.log('Last Name: ', e.target.lastName.value)
-    console.log('Email: ', e.target.email.value)
+  const router = useRouter()
 
+  let registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    let target = e.target as typeof e.target & {
+      firstName: { value: string};
+      lastName: { value: string };
+      email: { value: string };
+    };
+
+    await axios.post('http://localhost:3002/user/create', {
+      first_name: target.firstName.value,
+      last_name: target.lastName.value,
+      email: target.email.value
+    })
   }
+
+  let loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    let target = e.target as typeof e.target & {
+      email: { value: string };
+    };
+
+    let currentUser = await axios.get(`http://localhost:3002/user/email/${ target.email.value }`)
+    console.log('the current user is: ', currentUser)
+
+    router.push({
+      pathname: '/test',
+      query: { user: currentUser.data.first_name }
+    })
+  };
 
   return (
     <>
       <header className="enneagram-main">
         <div className="title">REGISTER NEW USER</div>
-          </header>
-            <div className="login-buttons-container">
-              <form onSubmit={registerUser}>
-                <label htmlFor="firstName">First Name</label>
-                <input id="firstName" name="firstName" type="text" autoComplete="firstName" required />
-                <label htmlFor="lastName">Last Name</label>
-                <input id="lastName" name="lastName" type="text" autoComplete="lastName" required />
-                <label htmlFor="email">Email</label>
-                <input id="email" name="email" type="text" autoComplete="email" required />
-                <button type="submit">Register</button>
-              </form>
-                <Button
-                  variant="contained">Start Test
-                </Button>
-          </div>
+      </header>
+
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={registerUser}
+      >
+        <TextField
+          required
+          id="firstName"
+          label="First Name"
+          variant="filled"
+        />
+        <TextField
+          required
+          id="lastName"
+          label="Last Name"
+          variant="filled"
+        />
+        <TextField
+          required
+          id="email"
+          label="Email"
+          variant="filled"
+        />
+        <Button
+          color="success"
+          type="submit"
+          variant="contained">
+            Register
+        </Button>
+      </Box>
+
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={loginUser}
+      >
+        <TextField
+          required
+          id="email"
+          label="Email"
+          variant="filled"
+        />
+        <Button
+          color="success"
+          type="submit"
+          variant="contained">
+            Login
+        </Button>
+      </Box>
+
+
+        {/* <div className="login-buttons-container">
+          <form onSubmit={registerUser}>
+            <label htmlFor="firstName">First Name</label>
+            <input id="firstName" name="firstName" type="text" autoComplete="firstName" required />
+            <label htmlFor="lastName">Last Name</label>
+            <input id="lastName" name="lastName" type="text" autoComplete="lastName" required />
+            <label htmlFor="email">Email</label>
+            <input id="email" name="email" type="text" autoComplete="email" required />
+            <button type="submit">Register</button>
+          </form>
+            <Button
+              color="success"
+              variant="contained">
+                Start Test
+            </Button>
+          </div> */}
        </>
    );
 };
