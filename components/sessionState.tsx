@@ -1,17 +1,29 @@
-import { createContext, useContext } from 'react'
+// import { createContext, useContext, useState } from 'react'
 
-const AppContext = createContext()
+// type QuestionContextType = {
+//   questions: Array<number>;
+//   currentQuestion: number;
+// }
 
-export function AppWrapper({ children }) {
-  let sharedState = {/* whatever you want */}
+// const QuestionContextDefaultValues: QuestionContextType = {
+//   questions: [],
+//   currentQuestion: 0
+// }
 
-  return (
-    <AppContext.Provider value={sharedState}>
-      {children}
-    </AppContext.Provider>
-  );
-}
+// const AppContext = createContext()
 
-export function useAppContext() {
-  return useContext(AppContext);
-}
+// export function AppWrapper({ children }) {
+//   let sharedState = {
+//     const [user, setUser] = useState(0)
+//   }
+
+//   return (
+//     <AppContext.Provider value={sharedState}>
+//       {children}
+//     </AppContext.Provider>
+//   );
+// }
+
+// export function useAppContext() {
+//   return useContext(AppContext);
+// }

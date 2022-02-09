@@ -2,21 +2,21 @@ import React, { useState, useEffect, createContext, useContext, ReactNode } from
 
 type QuestionsContextType = {
   questionSet: Array<number>
-  currentQuestion: number
+  questionIndex: number
   updateQuestionSet: (questionSet: Array<number>) => void
-  updateCurrentQuestion: () => void
+  updateQuestionIndex: () => void
 }
 
 const defaultState: QuestionsContextType = {
   questionSet: [],
-  currentQuestion: 0,
+  questionIndex: 0,
   updateQuestionSet: () => {},
-  updateCurrentQuestion: () => {},
+  updateQuestionIndex: () => {},
 }
 
 const QuestionsContext = createContext<QuestionsContextType>(defaultState)
 
-export function sessionQuestions() {
+export function SessionQuestions() {
   return useContext(QuestionsContext)
 }
 
@@ -27,22 +27,27 @@ type Props = {
 export function QuestionsProvider({ children }: Props) {
   const [questionSet, setQuestionSet] = useState<Array<number>>([])
 
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0)
+  const [questionIndex, setQuestionIndex] = useState<number>(0)
 
   const updateQuestionSet = (newQuestionSet: Array<number>) => {
     setQuestionSet(newQuestionSet)
   }
 
-  const updateCurrentQuestion = () => {
-    setCurrentQuestion(currentQuestion + 1)
+  const updateQuestionIndex = () => {
+    setQuestionIndex(questionIndex + 1)
   }
 
   const value = {
     questionSet,
-    currentQuestion,
+    questionIndex,
     updateQuestionSet,
-    updateCurrentQuestion,
+    updateQuestionIndex,
   }
+
+  useEffect(() => {
+    console.log('questions: ', questionSet)
+    // console.log('currentQuestion', currentQuestion)
+  }, [questionSet])
 
   return (
     <>
