@@ -17,7 +17,10 @@ const Start = () => {
   const router = useRouter()
 
   const [username, setUsername] = useState<string>('')
+  const [userId, setUserId] = useState<number>(0)
   const [testInProgress, setTestInProgress] = useState<boolean>(false)
+  const [questionSet, setQuestionSet] = useState<Array<number>>([])
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0)
 
   console.log('THis is the router:', router.query.uid)
 
@@ -26,6 +29,7 @@ const Start = () => {
     let currentUser = await axios.get(`http://localhost:3002/user/${ router.query.uid }`)
     console.log('the current user in the test page is: ', currentUser)
     setUsername(currentUser.data.first_name)
+    setUserId(currentUser.data.id)
     setTestInProgress(currentUser.data.testing)
     console.log(testInProgress)
   };
@@ -35,9 +39,15 @@ const Start = () => {
   });
 
   let testGetRequest = async () => {
-    console.log('button pressed')
-    let result = await axios.get('http://localhost:3002/question/4')
-    console.log(result);
+
+    let createTest = await axios.post('http://localhost:3002/test/create', { userId: userId })
+    let test = await axios.get(`http://localhost:3002/test/${ createTest.data.testId }`)
+    setQuestionSet(test.data.questions)
+    setCurrentQuestion(test.data.current_question)
+    console.log('questions: ', questionSet)
+    console.log('currentQuestion', currentQuestion)
+    // let result = await axios.get('http://localhost:3002/question/4')
+    // console.log(result);
   }
 
   return (
@@ -50,12 +60,12 @@ const Start = () => {
               <div className="login-buttons-container">
               <Link href="/test/[question]" as={ `/test/10` } passHref>
                   <Button
-                    onClick={testGetRequest}
+                    // onClick={testGetRequest}
                     disabled={!testInProgress}
                     variant="contained">Resume Test
                   </Button>
                 </Link>
-                <Link href="/test/[question]" as={ `/test/4` } passHref>
+                <Link href="/test/[question]" as={ `/test/${ questionSet[currentQuestion] }` } passHref>
                   <Button
                     onClick={testGetRequest}
                     disabled={testInProgress}
