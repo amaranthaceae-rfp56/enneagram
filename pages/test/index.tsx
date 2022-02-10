@@ -17,7 +17,7 @@ const Start = () => {
 
   const router = useRouter()
 
-  const { questionSet, currentQuestion, updateQuestionSet, updateCurrentQuestion } = SessionQuestions()
+  const { questionSet, questionIndex, updateQuestionSet, updateQuestionIndex } = SessionQuestions()
 
   const [username, setUsername] = useState<string>('')
   const [userId, setUserId] = useState<number>(0)
@@ -30,7 +30,7 @@ const Start = () => {
 
   let userData = async () => {
 
-    let currentUser = await axios.get(`http://localhost:3002/user/${ router.query.uid }`)
+    let currentUser = await axios.get(`/user/${ router.query.uid }`)
     console.log('the current user in the test page is: ', currentUser)
     setUsername(currentUser.data.first_name)
     setUserId(currentUser.data.id)
@@ -44,8 +44,8 @@ const Start = () => {
 
   let createNewTest = async () => {
 
-    let newTest = await axios.post('http://localhost:3002/test/create', { userId: userId })
-    let test = await axios.get(`http://localhost:3002/test/${ newTest.data.testId }`)
+    let newTest = await axios.post('/test/create', { userId: userId })
+    let test = await axios.get(`/test/${ newTest.data.testId }`)
 
     console.log('newTest', newTest);
 
