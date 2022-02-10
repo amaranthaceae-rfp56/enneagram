@@ -17,7 +17,7 @@ const Results = () => {
 
   let getEnneatype = async () => {
     console.log('this is the etype', etype);
-    let enneatype = await axios.get(`/enneatype/${ val }`)
+    let enneatype = await axios.get(`/enneatype/${ etype }`)
     setEnneatype(enneatype.data.name_english)
     console.log('your enneatype is: ', enneatype.data.name_english)
   };
