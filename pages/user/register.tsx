@@ -21,7 +21,7 @@ const Register = () => {
       email: { value: string };
     };
 
-    await axios.post('http://localhost:3002/user/create', {
+    await axios.post('/user/create', {
       first_name: target.firstName.value,
       last_name: target.lastName.value,
       email: target.email.value
@@ -34,7 +34,7 @@ const Register = () => {
       email: { value: string };
     };
 
-    let currentUser = await axios.get(`http://localhost:3002/user/email/${ target.email.value }`)
+    let currentUser = await axios.get(`/user/email/${ target.email.value }`)
     console.log('the current user is: ', currentUser)
 
     router.push({
