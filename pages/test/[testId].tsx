@@ -21,13 +21,31 @@ const Question = () => {
   const [questionNumber, setQuestionNumber] = useState<number>(questionSet[questionIndex])
   const [questionText, setQuestionText] = useState<string>('')
   const [questionEtype, setQuestionEtype] = useState<number>(0)
+  const [results, setResults] = useState<Array<number>>([])
 
   const registerUserResponse = async (answer: boolean) => {
     if (answer) {
-      let results = await axios.put((`/test/answer/yes/${testId}/${questionEtype}`))
-      console.log(results);
+      let newResults = await axios.put((`/test/answer/yes/${testId}/${questionEtype}`))
+      let resultsArray: Array<any> = Object.values(newResults.data).slice(0, 9)
+      setResults(resultsArray)
+      console.log(newResults);
     }
-    updateQuestionIndex()
+
+    if (questionIndex < questionSet.length - 1) {
+      updateQuestionIndex()
+    } else {
+      // currently not taking into account scores that have multiple maxValues
+      let maxValue = Math.max(...results)
+      let maxType = results.indexOf(maxValue) + 1
+      router.push({
+        pathname: '/test/results',
+        query: {
+          etype: maxType,
+          escore: maxValue,
+        }
+      })
+    }
+
   }
 
   const getQuestionNumber = async () => {
@@ -43,12 +61,16 @@ const Question = () => {
   useEffect(() => {
     getQuestionNumber()
     getQuestionData()
+    console.log(results);
   },[questionIndex])
 
   return (
     <>
     <h1>
       Test ID: { testId }
+    </h1>
+    <h1>
+      Question Index: { questionIndex }
     </h1>
     <h1>
       Question No: { questionNumber }
