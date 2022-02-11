@@ -1,10 +1,11 @@
 import React, { ReactDOM, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Button from '@mui/material/Button'
+import Image from 'next/image'
+import { Container, Button, Box, TextField, Typography } from '@mui/material'
 import axios from 'axios'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import logo from '../../assets/eneagrama.png'
+
 
 type RegisterProps = {
 };
@@ -44,87 +45,142 @@ const Register = () => {
   };
 
   return (
-    <>
-      <header className="enneagram-main">
-        <div className="title">REGISTER NEW USER</div>
-      </header>
 
-      <Box
-        component="form"
+    <Container maxWidth='lg'>
+      <Box component='header'
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 8
         }}
-        noValidate
-        autoComplete="off"
-        onSubmit={registerUser}
       >
-        <TextField
-          required
-          id="firstName"
-          label="First Name"
-          variant="filled"
-        />
-        <TextField
-          required
-          id="lastName"
-          label="Last Name"
-          variant="filled"
-        />
-        <TextField
-          required
-          id="email"
-          label="Email"
-          variant="filled"
-        />
-        <Button
-          color="success"
-          type="submit"
-          variant="contained">
+        <Typography
+          color='primary'
+          variant='h3'
+          className='title'>
+          The Enneagram Survey
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 4
+        }}
+      >
+        <Image
+          className="enneagram-logo"
+          src={ logo }
+          width={80}
+          height={80}
+          alt="logo"/>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          m: 2,
+        }}
+      >
+        <Box
+          component='form'
+          sx={{
+            borderRadius: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            maxWidth: 400,
+            backgroundColor: "secondary.main",
+            m: 2,
+            // '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={registerUser}
+        >
+          <Typography sx={{ my: 2 }}
+            color='primary'
+            variant='h5'
+            align='center'
+            className='title'>
+            Register new user
+          </Typography>
+          <TextField
+            required
+            id="firstName"
+            label="First Name"
+            variant="outlined"
+            style={{ width: '70%', margin: 5 }}
+            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            InputLabelProps={{ style: { fontSize: 14, color: "primary" } }}
+          />
+          <TextField
+            required
+            id="lastName"
+            label="Last Name"
+            variant="outlined"
+            style={{ width: '70%', margin: 5 }}
+            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
+          />
+          <TextField
+            required
+            id="email"
+            label="Email"
+            variant="outlined"
+            style={{ width: '70%', margin: 5 }}
+            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
+          />
+          <Button sx={{ my: 4 }}
+            style={{ width: '70%' }}
+            color="primary"
+            type="submit"
+            variant="contained">
             Register
-        </Button>
-      </Box>
-
-      <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={loginUser}
-      >
-        <TextField
-          required
-          id="email"
-          label="Email"
-          variant="filled"
-        />
-        <Button
-          color="success"
-          type="submit"
-          variant="contained">
+          </Button>
+        </Box>
+        <Box
+          component="form"
+          sx={{
+            borderRadius: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            maxWidth: 400,
+            backgroundColor: "secondary.main",
+            m: 2,
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={loginUser}
+        >
+          <Typography sx={{ my: 2 }}
+            color='primary'
+            variant='h5'
+            align='center'
+            className='title'>
             Login
-        </Button>
+          </Typography>
+          <TextField
+            required
+            id="email"
+            label="Email"
+            variant="outlined"
+            style={{ width: '70%', margin: 5 }}
+            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
+          />
+          <Button sx={{ my: 4 }}
+            style={{ width: '70%' }}
+            color="primary"
+            type="submit"
+            variant="contained">
+            Login
+          </Button>
+        </Box>
       </Box>
-
-
-        {/* <div className="login-buttons-container">
-          <form onSubmit={registerUser}>
-            <label htmlFor="firstName">First Name</label>
-            <input id="firstName" name="firstName" type="text" autoComplete="firstName" required />
-            <label htmlFor="lastName">Last Name</label>
-            <input id="lastName" name="lastName" type="text" autoComplete="lastName" required />
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="text" autoComplete="email" required />
-            <button type="submit">Register</button>
-          </form>
-            <Button
-              color="success"
-              variant="contained">
-                Start Test
-            </Button>
-          </div> */}
-       </>
+    </Container>
    );
 };
 
