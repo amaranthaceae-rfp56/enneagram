@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Container, Button, Box, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import logo from '../../assets/eneagrama.png'
+import styles from './registration.module.css'
 
 
 type RegisterProps = {
@@ -46,7 +47,7 @@ const Register = () => {
 
   return (
 
-    <Container maxWidth='lg'>
+    <Container maxWidth='xl'>
       <Box component='header'
         sx={{
           display: 'flex',
@@ -57,6 +58,7 @@ const Register = () => {
         <Typography
           color='primary'
           variant='h3'
+          align='center'
           className='title'>
           The Enneagram Survey
         </Typography>
@@ -78,6 +80,8 @@ const Register = () => {
       <Box
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
           justifyContent: 'center',
           m: 2,
         }}
@@ -85,12 +89,14 @@ const Register = () => {
         <Box
           component='form'
           sx={{
+            border: 2,
             borderRadius: 4,
+            borderColor: 'secondary.main',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            maxWidth: 400,
-            backgroundColor: "secondary.main",
+            width: 300,
+            // backgroundColor: "secondary.main",
             m: 2,
             // '& > :not(style)': { m: 1, width: '25ch' },
           }}
@@ -100,7 +106,7 @@ const Register = () => {
         >
           <Typography sx={{ my: 2 }}
             color='primary'
-            variant='h5'
+            variant='h6'
             align='center'
             className='title'>
             Register new user
@@ -110,17 +116,17 @@ const Register = () => {
             id="firstName"
             label="First Name"
             variant="outlined"
-            style={{ width: '70%', margin: 5 }}
-            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
-            InputLabelProps={{ style: { fontSize: 14, color: "primary" } }}
+            style={{ width: '80%', margin: 5 }}
+            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            InputLabelProps={{ style: { fontSize: 14 } }}
           />
           <TextField
             required
             id="lastName"
             label="Last Name"
             variant="outlined"
-            style={{ width: '70%', margin: 5 }}
-            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            style={{ width: '80%', margin: 5 }}
+            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
             InputLabelProps={{ style: { fontSize: 14 } }}
           />
           <TextField
@@ -128,12 +134,12 @@ const Register = () => {
             id="email"
             label="Email"
             variant="outlined"
-            style={{ width: '70%', margin: 5 }}
-            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
+            style={{ width: '80%', margin: 5 }}
+            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
             InputLabelProps={{ style: { fontSize: 14 } }}
           />
           <Button sx={{ my: 4 }}
-            style={{ width: '70%' }}
+            style={{ width: '80%' }}
             color="primary"
             type="submit"
             variant="contained">
@@ -143,12 +149,14 @@ const Register = () => {
         <Box
           component="form"
           sx={{
+            border: 2,
             borderRadius: 4,
+            borderColor: 'secondary.main',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            maxWidth: 400,
-            backgroundColor: "secondary.main",
+            width: 300,
+            // backgroundColor: "secondary.main",
             m: 2,
           }}
           noValidate
@@ -157,7 +165,7 @@ const Register = () => {
         >
           <Typography sx={{ my: 2 }}
             color='primary'
-            variant='h5'
+            variant='h6'
             align='center'
             className='title'>
             Login
@@ -167,12 +175,12 @@ const Register = () => {
             id="email"
             label="Email"
             variant="outlined"
-            style={{ width: '70%', margin: 5 }}
+            style={{ width: '80%', margin: 5 }}
             inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
             InputLabelProps={{ style: { fontSize: 14 } }}
           />
           <Button sx={{ my: 4 }}
-            style={{ width: '70%' }}
+            style={{ width: '80%' }}
             color="primary"
             type="submit"
             variant="contained">

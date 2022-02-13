@@ -36,7 +36,7 @@ const Results = () => {
             </header>
               <div className="login-buttons-container">
                 <Button
-                  onClick={() => router.push('/user/register')}
+                  onClick={() => router.push('/user/registration')}
                   variant="contained">Start Over
                 </Button>
           </div>
