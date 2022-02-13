@@ -1,0 +1,11 @@
+.userInput {
+  width: 50%;
+  margin: 5;
+}
+
+.userInput.MuiInputLabel-outlined {
+  color: '#ffffff' !important ;
+  font-size: 4 !important;
+}
+
+/* style: { fontSize: 14, color: "primary" } */

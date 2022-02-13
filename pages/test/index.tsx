@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Button from '@mui/material/Button'
+import { Container, Button, Box, TextField, Typography } from '@mui/material'
 import logo from '../../assets/eneagrama.png'
 import axios from 'axios'
 import { SessionQuestions } from '../../contexts/QuestionsContext'
@@ -64,29 +64,83 @@ const Start = () => {
   }
 
   return (
-    <>
-      <header className="enneagram-main">
-        {/* <div className="title">E9 ENNEAGRAM TEST</div> */}
-        <div className="title">E9 ENNEAGRAM TEST for { username }</div>
-        <div> { questionSet } </div>
-          <Image className="enneagram-logo" src={ logo } alt="logo"/>
-            </header>
-              <div className="login-buttons-container">
-              <Link href="/test/[question]" as={ `/test/10` } passHref>
-                  <Button
-                    // onClick={testGetRequest}
-                    disabled={!testInProgress}
-                    variant="contained">Resume Test
-                  </Button>
-                </Link>
-                  <Button
-                    onClick={createNewTest}
-                    disabled={testInProgress}
-                    variant="contained">Begin New Test
-                  </Button>
-          </div>
-       </>
-   );
+
+    <Container maxWidth='xl'>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 8
+        }}
+      >
+        <Typography
+          color='primary'
+          variant='h3'
+          align='center'
+          className='title'>
+          The Enneagram Survey
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 2
+        }}
+      >
+        <Typography
+          color='primary'
+          variant='h5'
+          align='center'
+          className='title'>
+          Hello {username}!
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 8
+        }}
+      >
+        <Image
+          className="enneagram-logo"
+          src={logo}
+          width={150}
+          height={150}
+          alt="logo" />
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          m: 2,
+        }}
+      >
+        <Box sx={{ display: 'flex', width: 250, mt: 8}}>
+          <Button
+            onClick={() => `/test/${oldTest.data.testId}`}
+            disabled={!testInProgress}
+            variant="contained"
+            style={{ minHeight: 50, width: '80%' }}>
+            Resume Test
+          </Button>
+        </Box>
+        <Box sx={{ display: 'flex', width: 250, mt: 8}}>
+          <Button
+            onClick={createNewTest}
+            disabled={testInProgress}
+            variant="contained"
+            style={{ minHeight: 50, width: '80%' }}>
+            Begin New Test
+          </Button>
+        </Box>
+      </Box>
+    </Container>
+
+  );
 };
 
 export default Start;
