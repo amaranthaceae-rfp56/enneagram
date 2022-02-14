@@ -23,6 +23,7 @@ const Start = () => {
   const [userId, setUserId] = useState<number>(0)
   // const [testId, setTestId] = useState<number>(0)
   const [testInProgress, setTestInProgress] = useState<boolean>(false)
+  const [lastTest, setLastTest] = useState<number>(0)
   // const [questionSet, setQuestionSet] = useState<Array<number>>([])
   // const [currentQuestion, setCurrentQuestion] = useState<number>(0)
 
@@ -35,6 +36,7 @@ const Start = () => {
     setUsername(currentUser.data.first_name)
     setUserId(currentUser.data.id)
     setTestInProgress(currentUser.data.testing)
+    setLastTest(currentUser.data.testId)
     console.log(testInProgress)
   };
 
@@ -56,11 +58,29 @@ const Start = () => {
     // setTestId(newTest.data.testId)
     updateQuestionSet(test.data.questions)
     // testId = test.data.id
-    router.push(`/test/${ newTest.data.testId }`)
+    router.push({
+      pathname: `/test/${ newTest.data.testId }`,
+      query: { uid: userId }
+    })
+    await axios.put(`/user/${ userId }/status`)
     // console.log('questions inside get request: ', questionSet)
     // console.log('currentQuestion', currentQuestion)
     // let result = await axios.get('http://localhost:3002/question/4')
     // console.log(result);
+  }
+
+  let resumeTest = async () => {
+
+    let oldTest = await axios.get(`/test/${ lastTest }`)
+    console.log('oldTest', oldTest);
+    console.log('thisis the test:', oldTest.data.id)
+    updateQuestionSet(oldTest.data.questions)
+    updateQuestionIndex(oldTest.data.current_question)
+    router.push({
+      pathname: `/test/${ oldTest.data.id }`,
+      query: { uid: userId }
+    })
+
   }
 
   return (
@@ -121,7 +141,7 @@ const Start = () => {
       >
         <Box sx={{ display: 'flex', width: 250, mt: 8}}>
           <Button
-            onClick={() => `/test/${oldTest.data.testId}`}
+            onClick={resumeTest}
             disabled={!testInProgress}
             variant="contained"
             style={{ minHeight: 50, width: '80%' }}>

@@ -4,7 +4,7 @@ type QuestionsContextType = {
   questionSet: Array<number>
   questionIndex: number
   updateQuestionSet: (questionSet: Array<number>) => void
-  updateQuestionIndex: () => void
+  updateQuestionIndex: (questionIndex?: number) => void
 }
 
 const defaultState: QuestionsContextType = {
@@ -33,8 +33,12 @@ export function QuestionsProvider({ children }: Props) {
     setQuestionSet(newQuestionSet)
   }
 
-  const updateQuestionIndex = () => {
-    setQuestionIndex(questionIndex + 1)
+  const updateQuestionIndex = (currentIndex?: number) => {
+    if (currentIndex) {
+      setQuestionIndex(currentIndex)
+    } else {
+      setQuestionIndex(questionIndex + 1)
+    }
   }
 
   const value = {
