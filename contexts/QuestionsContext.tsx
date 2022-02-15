@@ -3,8 +3,8 @@ import React, { useState, useEffect, createContext, useContext, ReactNode } from
 type QuestionsContextType = {
   questionSet: Array<number>
   questionIndex: number
-  updateQuestionSet: (questionSet: Array<number>) => void
-  updateQuestionIndex: (questionIndex?: number) => void
+  updateQuestionSet: (newQuestionSet: Array<number>) => void
+  updateQuestionIndex: (currentIndex?: number) => void
 }
 
 const defaultState: QuestionsContextType = {

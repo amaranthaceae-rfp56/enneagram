@@ -29,20 +29,18 @@ const Start = () => {
 
   console.log('THis is the router:', router.query.uid)
 
-  let userData = async () => {
-
-    let currentUser = await axios.get(`/user/${ router.query.uid }`)
-    console.log('the current user in the test page is: ', currentUser)
-    setUsername(currentUser.data.first_name)
-    setUserId(currentUser.data.id)
-    setTestInProgress(currentUser.data.testing)
-    setLastTest(currentUser.data.testId)
-    console.log(testInProgress)
-  };
-
   useEffect(() => {
+    const userData = async () => {
+      let currentUser = await axios.get(`/user/${ router.query.uid }`)
+      console.log('the current user in the test page is: ', currentUser)
+      setUsername(currentUser.data.first_name)
+      setUserId(currentUser.data.id)
+      setTestInProgress(currentUser.data.testing)
+      setLastTest(currentUser.data.testId)
+      console.log(testInProgress)
+    };
     userData()
-  });
+  }, [router.query.uid, testInProgress]);
 
   let createNewTest = async () => {
 
@@ -62,7 +60,7 @@ const Start = () => {
       pathname: `/test/${ newTest.data.testId }`,
       query: { uid: userId }
     })
-    await axios.put(`/user/${ userId }/status`)
+    // await axios.put(`/user/${ userId }/status`)
     // console.log('questions inside get request: ', questionSet)
     // console.log('currentQuestion', currentQuestion)
     // let result = await axios.get('http://localhost:3002/question/4')
