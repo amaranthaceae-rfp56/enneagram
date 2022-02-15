@@ -3,7 +3,7 @@
   margin: 5;
 }
 
-.userInput.MuiInputLabel-outlined {
+.userInput .MuiInputBase-root-MuiOutlinedInput-root {
   color: '#ffffff' !important ;
   font-size: 4 !important;
 }

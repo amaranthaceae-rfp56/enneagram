@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactInstance, useEffect, useState } from 'react'
+import React, { ReactChild, ReactInstance, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Container, Button, Box, TextField, Typography } from '@mui/material'
 import Image from 'next/image'
@@ -44,6 +44,7 @@ const Question = () => {
       router.push({
         pathname: '/test/results',
         query: {
+          uid: uid,
           etype: maxType,
           escore: maxValue,
         }

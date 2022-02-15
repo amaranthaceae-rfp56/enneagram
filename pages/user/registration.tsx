@@ -11,9 +11,11 @@ import styles from './registration.module.css'
 type RegisterProps = {
 };
 
-const Register = () => {
+const Registration = () => {
 
   const router = useRouter()
+
+  const [userNotFound, setUserNotFound] = useState<boolean>(false)
 
   let registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,10 +41,14 @@ const Register = () => {
     let currentUser = await axios.get(`/user/email/${ target.email.value }`)
     console.log('the current user is: ', currentUser)
 
-    router.push({
-      pathname: '/test',
-      query: { uid: currentUser.data.id }
-    })
+    if (currentUser.data === '') {
+      setUserNotFound(true)
+    } else {
+      router.push({
+        pathname: '/test',
+        query: { uid: currentUser.data.id }
+      })
+    }
   };
 
   return (
@@ -173,8 +179,11 @@ const Register = () => {
           <TextField
             required
             id="email"
-            label="Email"
+            label={ userNotFound ? 'Incorrect Email' : 'Email' }
             variant="outlined"
+            error={userNotFound ? true : false}
+            helperText={userNotFound ? 'USER NOT FOUND!' : false}
+            onChange={ () => setUserNotFound(false) }
             style={{ width: '80%', margin: 5 }}
             inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
             InputLabelProps={{ style: { fontSize: 14 } }}
@@ -192,7 +201,7 @@ const Register = () => {
    );
 };
 
-export default Register;
+export default Registration;
 
 
 
