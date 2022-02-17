@@ -3,7 +3,12 @@
   margin: 5;
 }
 
-.userInput .MuiInputBase-root-MuiOutlinedInput-root {
+.userInput .MuiFormLabel-root {
+  color: '#ffffff' !important ;
+  font-size: 4 !important;
+}
+
+.Box .css-cw7cz7-MuiFormLabel-root-MuiInputLabel-root {
   color: '#ffffff' !important ;
   font-size: 4 !important;
 }

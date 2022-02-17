@@ -1,17 +1,29 @@
-import React, { ReactDOM, useState } from 'react'
+import React, { ReactDOM, useState, ComponentType, ReactNode } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { Container, Button, Box, TextField, Typography } from '@mui/material'
+import UserRegistrationField from '../../components/UserRegistrationField'
+import UserRegistrationBox from '../../components/UserRegistrationBox'
 import axios from 'axios'
 import logo from '../../assets/eneagrama.png'
 import styles from './registration.module.css'
 
+// type Props<Tag extends keyof JSX.IntrinsicElements> = {
+//   tag?: ComponentType | keyof JSX.IntrinsicElements;
+//   children?: ReactNode;
+// } & JSX.IntrinsicElements[Tag];
 
-type RegisterProps = {
-};
+type RegistrationProps = {
+  // label: string;
+  // keyof JSX.IntrinsicElements;
+  // label?: keyof JSX.IntrinsicElements;
+  // id?: keyof JSX.IntrinsicElements;
+}
+// & React.HTMLAttributes<HTMLOrSVGElement>;
 
-const Registration = () => {
+
+const Registration: React.FunctionComponent = () => {
 
   const router = useRouter()
 
@@ -25,20 +37,26 @@ const Registration = () => {
       email: { value: string };
     };
 
-    await axios.post('/user/create', {
+    let currentUser = await axios.post('/user/create', {
       first_name: target.firstName.value,
       last_name: target.lastName.value,
       email: target.email.value
     })
+
+   router.push({
+     pathname: '/test',
+     query: { uid: currentUser.data.id }
+   })
+
   }
 
   let loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     let target = e.target as typeof e.target & {
-      email: { value: string };
+      emailLogin: { value: string };
     };
 
-    let currentUser = await axios.get(`/user/email/${ target.email.value }`)
+    let currentUser = await axios.get(`/user/email/${ target.emailLogin.value }`)
     console.log('the current user is: ', currentUser)
 
     if (currentUser.data === '') {
@@ -117,36 +135,21 @@ const Registration = () => {
             className='title'>
             Register new user
           </Typography>
-          <TextField
-            required
-            id="firstName"
-            label="First Name"
-            variant="outlined"
-            style={{ width: '80%', margin: 5 }}
-            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
+          <UserRegistrationField
+            id='firstName'
+            label='First Name'
           />
-          <TextField
-            required
-            id="lastName"
-            label="Last Name"
-            variant="outlined"
-            style={{ width: '80%', margin: 5 }}
-            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
+          <UserRegistrationField
+            id='lastName'
+            label='Last Name'
           />
-          <TextField
-            required
-            id="email"
-            label="Email"
-            variant="outlined"
-            style={{ width: '80%', margin: 5 }}
-            InputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
+          <UserRegistrationField
+            id='email'
+            label='Email'
           />
           <Button sx={{ my: 4 }}
             style={{ width: '80%' }}
-            color="primary"
+            // color="primary"
             type="submit"
             variant="contained">
             Register
@@ -176,17 +179,12 @@ const Registration = () => {
             className='title'>
             Login
           </Typography>
-          <TextField
-            required
-            id="email"
+          <UserRegistrationField
+            id="emailLogin"
             label={ userNotFound ? 'Incorrect Email' : 'Email' }
-            variant="outlined"
             error={userNotFound ? true : false}
             helperText={userNotFound ? 'USER NOT FOUND!' : false}
             onChange={ () => setUserNotFound(false) }
-            style={{ width: '80%', margin: 5 }}
-            inputProps={{ style: { fontSize: 18, color: '#494f5b' } }}
-            InputLabelProps={{ style: { fontSize: 14 } }}
           />
           <Button sx={{ my: 4 }}
             style={{ width: '80%' }}
